@@ -1,20 +1,20 @@
 /* global exports */
 /* global XMLHttpRequest */
-/* global module */
 /* global process */
+/* global require */
 "use strict";
 
 exports._ajax = function () {
   var platformSpecific = { };
-  if (typeof module !== "undefined" && module.require && !(typeof process !== "undefined" && process.versions["electron"])) {
+  if (Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]') {
     // We are on node.js
     platformSpecific.newXHR = function () {
-      var XHR = module.require("xhr2");
+      var XHR = require("xhr2");
       return new XHR();
     };
 
     platformSpecific.fixupUrl = function (url) {
-      var urllib = module.require("url");
+      var urllib = require("url");
       var u = urllib.parse(url);
       u.protocol = u.protocol || "http:";
       u.hostname = u.hostname || "localhost";
